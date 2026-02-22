@@ -9,6 +9,14 @@
 //                                                                      ▀  ▀  ▀
 //
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+//
+// Matrix position map (from totem.dtsi):
+//
+//   pos 0-9:   top alpha     (5 left + 5 right)
+//   pos 10-19: home row      (5 left + 5 right)
+//   pos 20-29: bottom alpha  (5 left + 5 right)
+//   pos 30-37: pinky + thumb (pinky_L, 3 thumb_L, 3 thumb_R, pinky_R)
+//
 
 
 #include <behaviors.dtsi>
@@ -95,12 +103,15 @@ label= "BASE"                              ;
 //                                     ┃▼MSE BSPC  ┃ ▼NAV TAB  ┃    SPC    ┃   ┃   ENTER   ┃ ▼SYM DEL  ┃   BSPC    ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
-// ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
-
+// ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷
+// pos 0-9:   top row
                 &kp Q       &kp W       &kp F       &kp P       &kp B           &kp J       &kp L       &kp U       &kp Y       &kp SEMI
+// pos 10-19: home row (home row mods)
                 &mt LGUI A  &mt LALT R  &mt LCTRL S &mt LSHFT T &kp G           &kp M       &mt RSHFT N &mt RCTRL E &mt RALT I  &mt RGUI O
-    &kp ESC     &kp Z       &kp X       &kp C       &kp D       &kp V           &kp K       &kp H       &kp COMMA   &kp DOT     &kp FSLH    &kp BSLH
-                                        &lt MOUSE BSPC &lt NAV TAB &kp SPACE    &kp RET     &lt SYM DEL &kp BSPC
+// pos 20-29: bottom alpha row
+                &kp Z       &kp X       &kp C       &kp D       &kp V           &kp K       &kp H       &kp COMMA   &kp DOT     &kp FSLH
+// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
+    &kp ESC     &lt MOUSE BSPC &lt NAV TAB &kp SPACE                            &kp RET     &lt SYM DEL &kp BSPC    &kp BSLH
                         >;
                 };
 
@@ -121,12 +132,14 @@ label= "NAV"                               ;
 //                                     ┃           ┃ ███ NAV ██┃           ┃   ┃   ▼ FN    ┃     0     ┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
-// ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
-
+// pos 0-9:   top row
                 &kp ESC     &kp LG(LS(Z)) &kp UP    &kp EQUAL   &kp GRAVE       &kp TILDE   &kp N7      &kp N8      &kp N9      &kp N0
+// pos 10-19: home row
                 &kp LG(Z)   &kp LEFT    &kp DOWN    &kp RIGHT   &kp TAB         &kp MINUS   &kp N4      &kp N5      &kp N6      &kp PLUS
-    &trans      &kp DEL     &kp LG(X)   &kp LG(C)   &kp LG(V)   &trans          &kp UNDER   &kp N1      &kp N2      &kp N3      &kp STAR    &trans
-                                        &trans      &trans      &trans          &mo FN      &kp N0      &trans
+// pos 20-29: bottom alpha row
+                &kp DEL     &kp LG(X)   &kp LG(C)   &kp LG(V)   &trans          &kp UNDER   &kp N1      &kp N2      &kp N3      &kp STAR
+// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
+    &trans      &trans      &trans      &trans                                    &mo FN      &kp N0      &trans      &trans
                         >;
                 };
 
@@ -147,12 +160,14 @@ label= "SYM"                               ;
 //                                     ┃           ┃    GIF    ┃   ▼ FN    ┃   ┃           ┃ ███ SYM ██┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
-// ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
-
+// pos 0-9:   top row
                 &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &kp CARET   &kp AMPS    &kp STAR    &kp SQT     &kp DQT
+// pos 10-19: home row
                 &trans      &kp PIPE    &trans      &trans      &trans          &kp C_MUTE  &kp LPAR    &kp RPAR    &kp LBKT    &kp RBKT
-    &trans      &trans      &trans      &trans      &trans      &trans          &kp C_VOL_DN &kp C_VOL_UP &kp LBRC   &kp RBRC    &kp BSLH    &trans
-                                        &trans      &gif        &mo FN          &trans      &trans      &trans
+// pos 20-29: bottom alpha row
+                &trans      &trans      &trans      &trans      &trans          &kp C_VOL_DN &kp C_VOL_UP &kp LBRC   &kp RBRC    &kp BSLH
+// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
+    &trans      &trans      &gif        &mo FN                                  &trans      &trans      &trans      &trans
                         >;
                 };
 
@@ -173,12 +188,14 @@ label= "FN"                                ;
 //                                     ┃           ┃ ███ NAV ██┃           ┃   ┃   PLAY    ┃ ███ SYM ██┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
-// ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
-
+// pos 0-9:   top row
                 &sys_reset  &bt BT_CLR  &out OUT_TOG &trans     &jp_ime         &trans      &kp F7      &kp F8      &kp F9      &kp F12
+// pos 10-19: home row
                 &bootloader &bt BT_NXT  &trans      &trans      &trans          &trans      &kp F4      &kp F5      &kp F6      &kp F11
-    &trans      &trans      &bt BT_PRV  &trans      &trans      &trans          &kp C_PREV  &kp C_NEXT  &kp F1      &kp F2      &kp F3      &kp F10
-                                        &trans      &trans      &trans          &kp C_PP    &trans      &trans
+// pos 20-29: bottom alpha row
+                &trans      &bt BT_PRV  &trans      &trans      &trans          &kp C_PREV  &kp C_NEXT  &kp F1      &kp F2      &kp F3
+// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
+    &trans      &trans      &trans      &trans                                  &kp C_PP    &trans      &trans      &kp F10
                         >;
                 };
 
@@ -199,12 +216,14 @@ label= "MOUSE"                             ;
 //                                     ┃███ MSE ███┃           ┃           ┃   ┃  L CLICK  ┃  R CLICK  ┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
-// ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
-
+// pos 0-9:   top row
                 &trans      &trans      &trans      &trans      &trans          &trans      &trans      &mmv MOVE_UP &trans     &trans
+// pos 10-19: home row
                 &trans      &trans      &trans      &trans      &trans          &trans      &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans
-    &trans      &trans      &trans      &trans      &trans      &trans          &trans      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans      &trans
-                                        &trans      &trans      &trans          &mkp LCLK   &mkp RCLK   &trans
+// pos 20-29: bottom alpha row
+                &trans      &trans      &trans      &trans      &trans          &trans      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans
+// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
+    &trans      &trans      &trans      &trans                                  &mkp LCLK   &mkp RCLK   &trans      &trans
                         >;
                 };
         };
