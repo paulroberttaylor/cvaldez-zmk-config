@@ -1,98 +1,22 @@
-//
-//                                                        ▀▀▀▀▀     ▀▀▀▀▀          ▀▀█▀▀
-//                                                        ▄▀▀▀▄  ▄  ▄▀▀▀▄  ▄  ▄▀▀▀▄  █  ▄▀▀▀▄
-//                                                        █   █  █  █   █  █  █   █  █  █   █
-//                                                         ▀▀▀   █   ▀▀▀   █   ▀▀▀   ▀   ▀▀▀
-//                                                               █      ▄▄▄█▄▄▄    █   █
-//                                                               ▀      █  █  █     █▄█
-//                                                             ▀▀▀▀▀    █  █  █      ▀
-//                                                                      ▀  ▀  ▀
-//
-// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-//
-// Matrix position map (from totem.dtsi):
-//
-//   pos 0-9:   top alpha     (5 left + 5 right)
-//   pos 10-19: home row      (5 left + 5 right)
-//   pos 20-29: bottom alpha  (5 left + 5 right)
-//   pos 30-37: pinky + thumb (pinky_L, 3 thumb_L, 3 thumb_R, pinky_R)
-//
+# Totem Dream Layout Design
 
+## Overview
 
-#include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/outputs.h>
-#include <dt-bindings/zmk/pointing.h>
+5-layer Colemak-DH layout for a 38-key Totem split keyboard, optimised for dev work (VS Code, terminal, tmux), Salesforce (Apex/LWC), markdown writing, and Japanese input via romaji IME.
 
-#define BASE  0
-#define NAV   1
-#define SYM   2
-#define FN    3
-#define MOUSE 4
+## Layers
 
-&mt {
-    quick-tap-ms = <100>;
-    global-quick-tap;
-    flavor = "tap-preferred";
-    tapping-term-ms = <170>;
-};
+| # | Layer | Access | Purpose |
+|---|-------|--------|---------|
+| 0 | BASE  | default | Colemak-DH + home row mods |
+| 1 | NAV   | hold left middle thumb | Navigation, numbers, clipboard |
+| 2 | SYM   | hold right middle thumb | Programming symbols, quotes, brackets, media |
+| 3 | FN    | hold NAV + SYM together | F-keys, BT management, Japanese IME toggle |
+| 4 | MOUSE | hold left outer thumb | Mouse movement + clicks |
 
-/ {
-    combos {
-        compatible = "zmk,combos";
+## Layer 0: BASE - Colemak-DH + Home Row Mods
 
-        combo_esc {
-            timeout-ms = <50>;
-            key-positions = <0 1>;
-            bindings = <&kp ESC>;
-        };
-
-        combo_tmux {
-            timeout-ms = <50>;
-            key-positions = <12 13>;
-            bindings = <&kp LC(A)>;
-        };
-    };
-
-    macros {
-        gif: gif {
-            label = "giphy";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LSHFT>,
-                <&macro_tap>,
-                <&kp N2>,
-                <&macro_release>,
-                <&kp LSHFT>,
-                <&macro_tap>,
-                <&kp G &kp I &kp F>;
-        };
-
-        jp_ime: jp_ime {
-            label = "jp_ime";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press>,
-                <&kp LCTRL>,
-                <&macro_tap>,
-                <&kp SPACE>,
-                <&macro_release>,
-                <&kp LCTRL>;
-        };
-    };
-
-        keymap {
-                compatible = "zmk,keymap";
-// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-
-                base_layer {
-// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "BASE"                              ;
-// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃     Q     ┃     W     ┃     F     ┃     P     ┃     B     ┃   ┃     J     ┃     L     ┃     U     ┃     Y     ┃     ;     ┃
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
@@ -102,26 +26,27 @@ label= "BASE"                              ;
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
 //                                     ┃▼MSE BSPC  ┃ ▼NAV TAB  ┃    SPC    ┃   ┃   ENTER   ┃ ▼SYM DEL  ┃   BSPC    ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
- bindings = <
-// ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷
-// pos 0-9:   top row
-                &kp Q       &kp W       &kp F       &kp P       &kp B           &kp J       &kp L       &kp U       &kp Y       &kp SEMI
-// pos 10-19: home row (home row mods)
-                &mt LGUI A  &mt LALT R  &mt LCTRL S &mt LSHFT T &kp G           &kp M       &mt RSHFT N &mt RCTRL E &mt RALT I  &mt RGUI O
-// pos 20-29: bottom alpha row
-                &kp Z       &kp X       &kp C       &kp D       &kp V           &kp K       &kp H       &kp COMMA   &kp DOT     &kp FSLH
-// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
-    &kp ESC     &lt MOUSE BSPC &lt NAV TAB &kp SPACE                            &kp RET     &lt SYM DEL &kp BSPC    &kp BSLH
-                        >;
-                };
+```
 
-// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+Home row mods (⌘ = GUI, ⌥ = Alt, ⌃ = Ctrl, ⇧ = Shift):
+- Left:  GUI(A), Alt(R), Ctrl(S), Shift(T)
+- Right: Shift(N), Ctrl(E), Alt(I), GUI(O)
 
+Thumb keys:
+- Left outer: hold = MOUSE layer, tap = BSPC
+- Left middle: hold = NAV layer, tap = TAB
+- Left inner: SPC
+- Right inner: ENTER
+- Right middle: hold = SYM layer, tap = DEL
+- Right outer: BSPC
 
-                nav_layer {
-// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "NAV"                               ;
-// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+Outer pinky keys:
+- Left: ESC (dedicated, no layer needed)
+- Right: \ (backslash, useful for dev paths and escaping)
+
+## Layer 1: NAV - Navigation + Numbers (hold ▼NAV TAB)
+
+```
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃    ESC    ┃   REDO    ┃     UP    ┃     =     ┃     `     ┃   ┃     ~     ┃     7     ┃     8     ┃     9     ┃     0     ┃
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
@@ -131,25 +56,15 @@ label= "NAV"                               ;
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
 //                                     ┃           ┃ ███ NAV ██┃           ┃   ┃   ▼ FN    ┃     0     ┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
- bindings = <
-// pos 0-9:   top row
-                &kp ESC     &kp LG(LS(Z)) &kp UP    &kp EQUAL   &kp GRAVE       &kp TILDE   &kp N7      &kp N8      &kp N9      &kp N0
-// pos 10-19: home row
-                &kp LG(Z)   &kp LEFT    &kp DOWN    &kp RIGHT   &kp TAB         &kp MINUS   &kp N4      &kp N5      &kp N6      &kp PLUS
-// pos 20-29: bottom alpha row
-                &kp DEL     &kp LG(X)   &kp LG(C)   &kp LG(V)   &trans          &kp UNDER   &kp N1      &kp N2      &kp N3      &kp STAR
-// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
-    &trans      &trans      &trans      &trans                                    &mo FN      &kp N0      &trans      &trans
-                        >;
-                };
+```
 
-// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+- Left hand: arrows on home row, undo/redo, clipboard (cut/copy/paste send Cmd+X/C/V macros)
+- Right hand: number row layout (not numpad), arithmetic operators
+- Backtick and tilde for dev (template literals, home dir, markdown code blocks)
 
+## Layer 2: SYM - Symbols + Dev (hold ▼SYM DEL)
 
-                sym_layer {
-// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "SYM"                               ;
-// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃     !     ┃     @     ┃     #     ┃     $     ┃     %     ┃   ┃     ^     ┃     &     ┃     *     ┃     '     ┃     "     ┃
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
@@ -159,25 +74,16 @@ label= "SYM"                               ;
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
 //                                     ┃           ┃    GIF    ┃   ▼ FN    ┃   ┃           ┃ ███ SYM ██┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
- bindings = <
-// pos 0-9:   top row
-                &kp EXCL    &kp AT      &kp HASH    &kp DLLR    &kp PRCNT       &kp CARET   &kp AMPS    &kp STAR    &kp SQT     &kp DQT
-// pos 10-19: home row
-                &trans      &kp PIPE    &trans      &trans      &trans          &kp C_MUTE  &kp LPAR    &kp RPAR    &kp LBKT    &kp RBKT
-// pos 20-29: bottom alpha row
-                &trans      &trans      &trans      &trans      &trans          &kp C_VOL_DN &kp C_VOL_UP &kp LBRC   &kp RBRC    &kp BSLH
-// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
-    &trans      &trans      &gif        &mo FN                                  &trans      &trans      &trans      &trans
-                        >;
-                };
+```
 
-// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+- Left hand: shifted number symbols !@#$%, pipe
+- Right hand: all bracket types grouped logically - () home, [] above, {} below
+- Quotes on right top for easy string/markdown access
+- Media controls: mute, volume
 
+## Layer 3: FN - F-Keys + Board + IME (hold ▼NAV + ▼SYM together)
 
-                fn_layer {
-// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "FN"                                ;
-// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃   RESET   ┃  BT CLR   ┃  OUT TOG  ┃           ┃  JP IME   ┃   ┃           ┃    F7     ┃    F8     ┃    F9     ┃    F12    ┃
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
@@ -187,25 +93,16 @@ label= "FN"                                ;
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
 //                                     ┃           ┃ ███ NAV ██┃           ┃   ┃   PLAY    ┃ ███ SYM ██┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
- bindings = <
-// pos 0-9:   top row
-                &sys_reset  &bt BT_CLR  &out OUT_TOG &trans     &jp_ime         &trans      &kp F7      &kp F8      &kp F9      &kp F12
-// pos 10-19: home row
-                &bootloader &bt BT_NXT  &trans      &trans      &trans          &trans      &kp F4      &kp F5      &kp F6      &kp F11
-// pos 20-29: bottom alpha row
-                &trans      &bt BT_PRV  &trans      &trans      &trans          &kp C_PREV  &kp C_NEXT  &kp F1      &kp F2      &kp F3
-// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
-    &trans      &trans      &trans      &trans                                  &kp C_PP    &trans      &trans      &kp F10
-                        >;
-                };
+```
 
-// ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+- Left hand: board management (BT clear/next/prev, output toggle, reset, bootloader)
+- Right hand: F-keys in grid layout
+- JP IME: sends Ctrl+Space to toggle macOS Japanese input source
+- Media: prev/next track, play/pause on thumbs
 
+## Layer 4: MOUSE - Mouse Keys (hold ▼MSE BSPC)
 
-                mouse_layer {
-// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "MOUSE"                             ;
-// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃           ┃           ┃           ┃           ┃           ┃   ┃           ┃           ┃  MS UP    ┃           ┃           ┃
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
@@ -215,16 +112,58 @@ label= "MOUSE"                             ;
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
 //                                     ┃███ MSE ███┃           ┃           ┃   ┃  L CLICK  ┃  R CLICK  ┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
- bindings = <
-// pos 0-9:   top row
-                &trans      &trans      &trans      &trans      &trans          &trans      &trans      &mmv MOVE_UP &trans     &trans
-// pos 10-19: home row
-                &trans      &trans      &trans      &trans      &trans          &trans      &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans
-// pos 20-29: bottom alpha row
-                &trans      &trans      &trans      &trans      &trans          &trans      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans
-// pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
-    &trans      &trans      &trans      &trans                                  &mkp LCLK   &mkp RCLK   &trans      &trans
-                        >;
-                };
-        };
-};
+```
+
+- Right hand: mouse movement on home row (NEI = Left/Down/Right, U = Up)
+- Click buttons directly below movement keys (L/R/M click)
+- Thumb L/R click as backup
+- Left thumb holds layer, right hand does everything
+
+## Combos
+
+| Keys | Action | Notes |
+|------|--------|-------|
+| Q + W | ESC | Existing combo (keep as backup, ESC also on outer pinky) |
+| S + T | Ctrl+A | Tmux prefix - press both together or hold Ctrl(S) tap T |
+
+## Tmux Setup
+
+Recommended `.tmux.conf`:
+```
+set -g prefix C-a
+unbind C-b
+bind C-a send-prefix
+```
+
+With home row mods, Ctrl+A = hold S (Ctrl) + tap A. Adjacent fingers, very ergonomic.
+
+## Japanese Input
+
+Uses macOS romaji input method. The JP IME key on the FN layer sends Ctrl+Space to toggle between English and Japanese input sources. Type in romaji and macOS converts to hiragana/katakana/kanji.
+
+## ZMK Features Required
+
+- `&mt` (mod-tap) for home row mods
+- `&lt` (layer-tap) for thumb layer keys
+- `&kp` for standard keys
+- `&mmv` (mouse move), `&mkp` (mouse click) for MOUSE layer
+- `#include <dt-bindings/zmk/pointing.h>` in keymap
+- `CONFIG_ZMK_POINTING=y` in totem.conf
+- Macros for: clipboard shortcuts (Cmd+Z/X/C/V), JP IME toggle (Ctrl+Space), GIF
+- Combo for tmux prefix (Ctrl+A)
+- Re-pair Bluetooth after flashing (mouse support changes HID descriptor)
+
+## Future Considerations
+
+### One-handed mirror layer
+A mirror layer that flips the right half onto the left hand (or vice versa) for one-handed typing while using an external mouse. Would require a 6th layer. Save for a future iteration once the 5-layer setup is proven.
+
+### Code macros
+Arrow `=>`, `->`, `::`, `&&`, `||` as macros on the SYM layer blank spots. Add once actual pain points are identified through daily use.
+
+### Home row mod tuning
+The `&mt` behaviour may need tuning:
+- `tapping-term-ms`: currently 170ms, may need adjustment
+- `quick-tap-ms`: currently 100ms
+- `flavor`: currently tap-preferred, balanced may work better
+- `global-quick-tap`: helps prevent misfires during fast typing
