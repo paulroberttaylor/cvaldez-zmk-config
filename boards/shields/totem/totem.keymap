@@ -56,6 +56,15 @@
 
     };
 
+    behaviors {
+        td_mouse: td_mouse {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp BSLH>, <&tog MOUSE>;
+        };
+    };
+
     macros {
         gif: gif {
             label = "giphy";
@@ -98,7 +107,7 @@ label= "BASE"                              ;
                 &kp Q       &kp W       &kp F       &kp P       &kp B           &kp J       &kp L       &kp U       &kp Y       &kp SEMI
                 &mt LGUI A  &mt LALT R  &mt LCTRL S &mt LSHFT T &kp G           &kp M       &mt RSHFT N &mt RCTRL E &mt RALT I  &mt RGUI O
                 &kp Z       &kp X       &kp C       &kp D       &kp V           &kp K       &kp H       &kp COMMA   &kp DOT     &kp FSLH
-    &kp ESC     &lt MOUSE BSPC &lt NAV TAB &kp SPACE                            &kp RET     &lt SYM DEL &kp BSPC    &kp BSLH
+    &kp ESC     &kp BSPC    &lt NAV TAB &kp SPACE                               &kp SPACE   &lt SYM BSPC &kp RET    &td_mouse
                         >;
                 };
 
@@ -146,7 +155,7 @@ label= "MOUSE"                             ;
                 &trans      &trans      &trans      &trans      &trans          &trans      &trans      &mmv MOVE_UP &trans     &trans
                 &trans      &trans      &trans      &trans      &trans          &trans      &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans
                 &trans      &trans      &trans      &trans      &trans          &trans      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans
-    &trans      &trans      &trans      &trans                                  &mkp LCLK   &mkp RCLK   &trans      &trans
+    &trans      &trans      &trans      &trans                                  &mkp LCLK   &mkp RCLK   &trans      &tog MOUSE
                         >;
                 };
         };

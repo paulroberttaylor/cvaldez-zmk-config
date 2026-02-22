@@ -56,6 +56,15 @@
 
     };
 
+    behaviors {
+        td_mouse: td_mouse {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp BSLH>, <&tog MOUSE>;
+        };
+    };
+
     macros {
         gif: gif {
             label = "giphy";
@@ -99,9 +108,9 @@ label= "BASE"                              ;
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
 //             ┃    ⌘ A    ┃    ⌥ R    ┃    ⌃ S    ┃    ⇧ T    ┃     G     ┃   ┃     M     ┃    ⇧ N    ┃    ⌃ E    ┃    ⌥ I    ┃    ⌘ O    ┃
 // ┏━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┓
-// ┃    ESC    ┃     Z     ┃     X     ┃     C     ┃     D     ┃     V     ┃   ┃     K     ┃     H     ┃     ,     ┃     .     ┃     /     ┃     \     ┃
+// ┃    ESC    ┃     Z     ┃     X     ┃     C     ┃     D     ┃     V     ┃   ┃     K     ┃     H     ┃     ,     ┃     .     ┃     /     ┃ \ ⇥⇥MOUSE ┃
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
-//                                     ┃▼MSE BSPC  ┃ ▼NAV TAB  ┃    SPC    ┃   ┃   ENTER   ┃ ▼SYM DEL  ┃   BSPC    ┃
+//                                     ┃   BSPC    ┃ ▼NAV TAB  ┃    SPC    ┃   ┃    SPC    ┃▼SYM BSPC  ┃   ENTER   ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
 // ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷
@@ -112,7 +121,7 @@ label= "BASE"                              ;
 // pos 20-29: bottom alpha row
                 &kp Z       &kp X       &kp C       &kp D       &kp V           &kp K       &kp H       &kp COMMA   &kp DOT     &kp FSLH
 // pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
-    &kp ESC     &lt MOUSE BSPC &lt NAV TAB &kp SPACE                            &kp RET     &lt SYM DEL &kp BSPC    &kp BSLH
+    &kp ESC     &kp BSPC    &lt NAV TAB &kp SPACE                               &kp SPACE   &lt SYM BSPC &kp RET    &td_mouse
                         >;
                 };
 
@@ -134,7 +143,7 @@ label= "NAV"                               ;
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
 // pos 0-9:   top row
-                &kp ESC     &kp LG(LS(Z)) &kp UP    &kp EQUAL   &kp GRAVE       &kp TILDE   &kp N7      &kp N8      &kp N9      &kp N0
+                &kp ESC     &kp LG(LS(Z))  &kp UP   &kp EQUAL   &kp GRAVE       &kp TILDE   &kp N7      &kp N8      &kp N9      &kp N0
 // pos 10-19: home row
                 &kp LG(Z)   &kp LEFT    &kp DOWN    &kp RIGHT   &kp TAB         &kp MINUS   &kp N4      &kp N5      &kp N6      &kp PLUS
 // pos 20-29: bottom alpha row
@@ -212,9 +221,9 @@ label= "MOUSE"                             ;
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
 //             ┃           ┃           ┃           ┃           ┃           ┃   ┃           ┃  MS LEFT  ┃  MS DOWN  ┃ MS RIGHT  ┃           ┃
 // ┏━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┓
-// ┃           ┃           ┃           ┃           ┃           ┃           ┃   ┃           ┃  L CLICK  ┃  R CLICK  ┃  M CLICK  ┃           ┃           ┃
+// ┃           ┃           ┃           ┃           ┃           ┃           ┃   ┃           ┃  L CLICK  ┃  R CLICK  ┃  M CLICK  ┃           ┃ ⊘EXIT MSE ┃
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
-//                                     ┃███ MSE ███┃           ┃           ┃   ┃  L CLICK  ┃  R CLICK  ┃           ┃
+//                                     ┃           ┃           ┃           ┃   ┃  L CLICK  ┃  R CLICK  ┃           ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
 // pos 0-9:   top row
@@ -224,7 +233,7 @@ label= "MOUSE"                             ;
 // pos 20-29: bottom alpha row
                 &trans      &trans      &trans      &trans      &trans          &trans      &mkp LCLK   &mkp RCLK   &mkp MCLK   &trans
 // pos 30-37: pinky_L, thumb_L x3, thumb_R x3, pinky_R
-    &trans      &trans      &trans      &trans                                  &mkp LCLK   &mkp RCLK   &trans      &trans
+    &trans      &trans      &trans      &trans                                  &mkp LCLK   &mkp RCLK   &trans      &tog MOUSE
                         >;
                 };
         };
